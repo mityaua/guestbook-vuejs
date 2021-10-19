@@ -1,9 +1,11 @@
+// Компонент счётчика с датой, событиями клика и двумя методами на кнопках
+
 <template>
   <p>
     Counter: <b>{{ total }}</b>
   </p>
-  <button type="button" @click="total += 1" class="btn">Increment</button>
-  <button type="button" @click="total -= 1" class="btn">Decrement</button>
+  <button type="button" @click="Increment" class="btn">Increment</button>
+  <button type="button" @click="Decrement" class="btn">Decrement</button>
 </template>
 
 <script>
@@ -14,6 +16,14 @@ export default {
       total: 0,
     };
   },
+  methods: {
+    Increment() {
+      this.total = this.total += 1;
+    },
+    Decrement() {
+      this.total = this.total -= 1;
+    },
+  },
 };
 </script>
 
@@ -21,12 +31,21 @@ export default {
 .btn {
   margin-right: 10px;
   padding: 15px;
-  background-color: #1ec074;
   border: 1px solid transparent;
+
+  background-color: #1ec074;
+
+  text-transform: uppercase;
+
+  opacity: 1;
+  transition: opacity 250ms linear;
+
   cursor: pointer;
 }
+
 .btn:hover,
 .btn:focus {
   opacity: 0.8;
+  transition: opacity 250ms linear;
 }
 </style>
