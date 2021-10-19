@@ -1,8 +1,9 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
+  <h1>{{ title }}</h1>
   <Counter />
   <!-- Тип для v-bind и текст в слот -->
-  <Button type="button">Click me</Button>
+  <Button type="button" @click="increment">Click me</Button>
 </template>
 
 <script>
@@ -14,6 +15,21 @@ export default {
   components: {
     Counter,
     Button,
+  },
+  data() {
+    return {
+      amountOfClicks: 2021,
+    };
+  },
+  computed: {
+    title() {
+      return `Amount of clicks ${this.amountOfClicks}`;
+    },
+  },
+  methods: {
+    increment() {
+      this.amountOfClicks += 1;
+    },
   },
 };
 </script>
