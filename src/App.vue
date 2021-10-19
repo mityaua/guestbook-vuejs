@@ -1,20 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-  <Title></Title>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <Counter />
+  <!-- Тип для v-bind и текст в слот -->
+  <Button type="button">Click me</Button>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import Title from './components/Title.vue'
+import Counter from "./components/Counter.vue";
+import Button from "./components/Button.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld,
-    Title
-  }
-}
+    Counter,
+    Button,
+  },
+};
 </script>
 
 <style>
