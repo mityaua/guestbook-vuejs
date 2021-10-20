@@ -1,34 +1,47 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
   <h1>{{ title }}</h1>
-  <Counter />
-  <!-- Тип для v-bind и текст в слот -->
-  <Button type="button" @click="increment">Click me</Button>
+  <Button type="button" @click="increment(5)">Increment</Button>
+  <Button type="reset" @click="reset">Reset</Button>
+  <Button type="button" @click="decrement(1, $event)">Decrement</Button>
 </template>
 
 <script>
-import Counter from "./components/Counter.vue";
 import Button from "./components/Button.vue";
 
 export default {
   name: "App",
   components: {
-    Counter,
     Button,
   },
   data() {
     return {
-      amountOfClicks: 2021,
+      total: 0,
     };
   },
   computed: {
     title() {
-      return `Amount of clicks ${this.amountOfClicks}`;
+      return `Check this awesome counter: ${this.total}`;
     },
   },
   methods: {
-    increment() {
-      this.amountOfClicks += 1;
+    increment(n) {
+      this.total += n;
+    },
+    decrement(n, event) {
+      if (this.total > 0) {
+        this.total -= n;
+        console.log(event);
+      } else {
+        alert("Ниже ноля не уменьшить");
+        console.log(event);
+      }
+    },
+    reset() {
+      if (this.total !== 0) {
+        this.total = 0;
+        alert("Счетчик будет обнулен");
+      }
     },
   },
 };
