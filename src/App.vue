@@ -2,7 +2,7 @@
   <img alt="Vue logo" src="./assets/logo.png" />
   <h1>{{ title }}</h1>
   <Button type="button" @click="increment(5)">Increment</Button>
-  <Button type="reset" @click="reset">Reset</Button>
+  <Button type="reset" @click="reset" outlined>Reset</Button>
   <Button type="button" @click="decrement(1, $event)">Decrement</Button>
 </template>
 
