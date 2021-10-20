@@ -4,15 +4,18 @@
   <Button type="button" @click="increment(5)">Increment</Button>
   <Button type="reset" @click="reset" outlined>Reset</Button>
   <Button type="button" @click="decrement(1, $event)">Decrement</Button>
+  <Directives />
 </template>
 
 <script>
 import Button from "./components/Button.vue";
+import Directives from "./components/Directives.vue";
 
 export default {
   name: "App",
   components: {
     Button,
+    Directives,
   },
   data() {
     return {
