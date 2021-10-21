@@ -5,12 +5,16 @@
   <h3 v-show="false">Show</h3>
 
   <ul>
-    <li v-for="fruit in fruits" v-bind:key="fruit">{{ fruit }}</li>
+    <li v-for="user in users" v-bind:key="user.name">
+      <p>{{ `${user.name}: ${user.comment}` }}</p>
+    </li>
   </ul>
 
   <ul>
-    <template v-for="fruit in fruits">
-      <li v-if="fruit === 'kiwi'" v-bind:key="fruit">{{ fruit }}</li>
+    <template v-for="user in users">
+      <li v-if="user.name === 'Alex'" v-bind:key="user.name">
+        {{ user.name }}
+      </li>
     </template>
   </ul>
 
@@ -25,7 +29,11 @@ export default {
   data() {
     return {
       isVisible: true,
-      fruits: ["mango", "kiwi", "poly"],
+      users: [
+        { name: "Alex", comment: "Hello" },
+        { name: "Maria", comment: "World" },
+        { name: "John", comment: "Buy" },
+      ],
       cars: {
         lexus: {
           color: "red",
