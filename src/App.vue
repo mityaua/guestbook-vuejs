@@ -1,37 +1,31 @@
 <template>
   <h1 class="title center">Гостевая книга</h1>
-  <p class="total center">{{ total }}</p>
+  <p class="center">{{ total }}</p>
 
   <List v-bind:posts="posts" />
 
-  <fieldset class="center">
-    <legend>Добавьте запись в гостевую книгу</legend>
+  <form @submit.prevent="onSubmit" class="center">
+    <label>
+      Ваше имя:
+      <input type="text" v-model.trim="name" required />
+    </label>
 
-    <form>
-      <label>
-        Ваше имя:
-        <input type="text" v-model.trim="name" required />
-      </label>
+    <br /><br />
 
-      <br /><br />
+    <textarea
+      cols="35"
+      rows="5"
+      placeholder="Введите текст сообщения..."
+      v-model.trim="comment"
+      required
+    ></textarea>
 
-      <textarea
-        cols="35"
-        rows="5"
-        placeholder="Введите текст сообщения..."
-        v-model.trim="comment"
-        required
-      ></textarea>
+    <p v-if="comment">Предпросмотр:</p>
+    <p v-if="name">Публикация от имени: {{ name }}</p>
+    <p class="preview">{{ comment }}</p>
 
-      <p v-if="comment">Предпросмотр:</p>
-      <p v-if="name">Публикация от имени: {{ name }}</p>
-      <p class="preview">{{ comment }}</p>
-
-      <Button type="button" @click="submit">Опубликовать</Button>
-    </form>
-  </fieldset>
-
-  <!-- <Counter /> -->
+    <Button type="submit">Опубликовать</Button>
+  </form>
 </template>
 
 <script>
@@ -54,16 +48,22 @@ export default {
       comment: "",
       posts: [
         {
+          id: 1,
           name: "Гость",
           comment: "Пример тестового поста пользователя в гостей книге",
+          time: "21-10-2021",
         },
         {
+          id: 2,
           name: "Мария",
           comment: "Пример поста Марии",
+          time: "22-10-2021",
         },
         {
+          id: 3,
           name: "Джон",
           comment: "Пример поста Джона из этого же массива обьектов",
+          time: "23-10-2021",
         },
       ],
     };
@@ -72,18 +72,26 @@ export default {
     total() {
       return `Всего записей: ${this.posts.length}`;
     },
+    commentTime() {
+      return `${new Date()
+        .toISOString()
+        .split("T")[0]
+        .split("-")
+        .reverse()
+        .join(".")} (${new Date().toString().split(" ")[4]})`;
+    },
   },
   methods: {
-    submit(event) {
-      if (event) {
-        event.preventDefault();
-        console.log(event);
+    onSubmit() {
+      this.posts.push({
+        id: new Date().valueOf(),
+        name: this.name,
+        comment: this.comment,
+        time: this.commentTime,
+      });
+      alert("Ваша запись успешно добавлена");
 
-        this.posts.push({ name: this.name, comment: this.comment });
-        alert("Ваша запись успешно добавлена");
-
-        this.reset();
-      }
+      this.reset();
     },
     reset() {
       this.name = "";
@@ -165,11 +173,13 @@ body {
   border-radius: 50px;
 }
 
-.title {
-  margin-bottom: 10px;
-}
+/* .container {
+  width: 1238px;
+  margin: 0 auto;
+  padding: 0 15px;
+} */
 
-.total {
+.title {
   margin-bottom: 10px;
 }
 

@@ -1,11 +1,11 @@
 <template>
   <li class="item">
-    <div class="userinfo">
-      <b>{{ post.name }}</b>
-      <span>{{ commentTime }}</span>
+    <div class="item__info">
+      <span class="item__name">{{ post.name }}</span>
+      <span>{{ post.time }}</span>
     </div>
 
-    <p class="comment">{{ post.comment }}</p>
+    <p class="item__comment">{{ post.comment }}</p>
   </li>
 </template>
 
@@ -17,20 +17,12 @@ export default {
       type: Object,
       default: function () {
         return {
+          id: 1,
           name: "Гость",
           comment: "",
+          time: "",
         };
       },
-    },
-  },
-  computed: {
-    commentTime() {
-      return `${new Date()
-        .toISOString()
-        .split("T")[0]
-        .split("-")
-        .reverse()
-        .join(".")} (${new Date().toString().split(" ")[4]})`;
     },
   },
 };
@@ -44,13 +36,18 @@ export default {
   border-radius: 10px;
 }
 
-.userinfo {
+.item__info {
   padding-bottom: 10px;
   border-bottom: 1px solid #d4d1d1;
   /* box-shadow: 0px 2px 3px 4px tomato; */
 }
 
-.comment {
+.item__name {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.item__comment {
   padding: 10px 0;
 }
 </style>

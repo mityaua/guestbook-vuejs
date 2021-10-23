@@ -1,6 +1,6 @@
 <template>
-  <ul>
-    <template v-for="post in posts" v-bind:key="post.name">
+  <ul class="list">
+    <template v-for="post in posts" v-bind:key="post.id">
       <ListItem v-bind:post="post" />
     </template>
   </ul>
@@ -25,4 +25,8 @@ export default {
 </script>
 
 <style scoped>
+.list {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
 </style>
