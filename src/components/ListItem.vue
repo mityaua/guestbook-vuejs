@@ -1,7 +1,7 @@
 <template>
   <li class="item">
     <div class="item__photo">
-      <img src="favicon.png" alt="аватар" width="100" height="100" />
+      <avatar :fullname="post.name" :size="100" :radius="10"></avatar>
     </div>
 
     <div>
@@ -16,8 +16,13 @@
 </template>
 
 <script>
+import Avatar from "vue-avatar-component";
+
 export default {
   name: "ListItem",
+  components: {
+    Avatar,
+  },
   props: {
     post: {
       type: Object,

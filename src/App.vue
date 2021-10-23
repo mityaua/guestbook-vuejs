@@ -7,7 +7,14 @@
   <form @submit.prevent="onSubmit" class="center">
     <label>
       Ваше имя:
-      <input type="text" v-model.lazy.trim="name" required />
+      <input
+        type="text"
+        v-model.lazy.trim="name"
+        required
+        maxlength="40"
+        spellcheck="false"
+        placeholder="До 40 символов"
+      />
     </label>
 
     <br /><br />
@@ -18,11 +25,19 @@
       placeholder="Введите текст сообщения..."
       v-model.trim="comment"
       required
+      v-bind:maxlength="max"
     ></textarea>
 
-    <p v-if="comment">Предпросмотр:</p>
-    <p v-if="name">Публикация от имени: {{ name }}</p>
-    <p class="preview">{{ comment }}</p>
+    <div class="preview">
+      <p>Предпросмотр:</p>
+      <p v-if="name">
+        Имя: <b>{{ name }}</b>
+      </p>
+      <p v-if="comment" class="preview__comment">Сообщение: {{ comment }}</p>
+      <p v-if="comment" class="preview__comment">
+        Осталось символов: {{ max - comment.length }}
+      </p>
+    </div>
 
     <Button type="submit">Опубликовать</Button>
   </form>
@@ -30,9 +45,11 @@
 
 <script>
 import "./assets/styles/normalizer.css";
+import "mosha-vue-toastify/dist/style.css";
 
 import Button from "./components/Button.vue";
 import List from "./components/List.vue";
+import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "App",
@@ -44,6 +61,7 @@ export default {
     return {
       name: "",
       comment: "",
+      max: 200,
       posts: [
         {
           id: 1,
@@ -53,7 +71,7 @@ export default {
         },
         {
           id: 2,
-          name: "Мария",
+          name: "Doctor Who",
           comment: "Пример поста Марии",
           time: "22.10.2021",
         },
@@ -87,7 +105,14 @@ export default {
         comment: this.comment,
         time: this.commentTime,
       });
-      alert("Ваша запись успешно добавлена");
+
+      createToast("Ваша запись успешно добавлена", {
+        showIcon: true,
+        timeout: 2000,
+        position: "top-center",
+        type: "success",
+        transition: "zoom",
+      });
 
       this.reset();
     },
@@ -176,12 +201,6 @@ body {
   border-radius: 50px;
 }
 
-/* .container {
-  width: 1238px;
-  margin: 0 auto;
-  padding: 0 15px;
-} */
-
 .title {
   margin-bottom: 10px;
 }
@@ -191,8 +210,20 @@ body {
 }
 
 .preview {
+  /* padding: 10px; */
+}
+
+.preview__comment {
   white-space: pre-line;
+
+  transition: opacity 250ms linear;
   opacity: 0.5;
+}
+
+.preview__comment:hover,
+.preview__comment:focus {
+  transition: opacity 250ms linear;
+  opacity: 1;
 }
 
 @keyframes gradient {
