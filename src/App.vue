@@ -1,12 +1,11 @@
 <template>
-  <h1 class="center">Гостевая книга</h1>
-
-  <p class="center">{{ total }}</p>
+  <h1 class="title center">Гостевая книга</h1>
+  <p class="total center">{{ total }}</p>
 
   <List v-bind:posts="posts" />
 
   <fieldset class="center">
-    <legend>Добавьте ваш комментарий в гостевую книгу</legend>
+    <legend>Добавьте запись в гостевую книгу</legend>
 
     <form>
       <label>
@@ -32,7 +31,7 @@
     </form>
   </fieldset>
 
-  <Counter />
+  <!-- <Counter /> -->
 </template>
 
 <script>
@@ -40,14 +39,14 @@ import "./assets/styles/normalizer.css";
 
 import Button from "./components/Button.vue";
 import List from "./components/List.vue";
-import Counter from "./components/Counter.vue";
+// import Counter from "./components/Counter.vue";
 
 export default {
   name: "App",
   components: {
     Button,
     List,
-    Counter,
+    // Counter,
   },
   data() {
     return {
@@ -71,7 +70,7 @@ export default {
   },
   computed: {
     total() {
-      return `Всего записей в гостевой книге: ${this.posts.length}`;
+      return `Всего записей: ${this.posts.length}`;
     },
   },
   methods: {
@@ -164,6 +163,14 @@ body {
   background-color: #fff;
   margin: 50px;
   border-radius: 50px;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.total {
+  margin-bottom: 10px;
 }
 
 .center {
