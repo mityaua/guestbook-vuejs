@@ -36,9 +36,12 @@
 </template>
 
 <script>
+import "./assets/styles/normalizer.css";
+
 import Button from "./components/Button.vue";
 import List from "./components/List.vue";
 import Counter from "./components/Counter.vue";
+
 export default {
   name: "App",
   components: {
@@ -92,13 +95,54 @@ export default {
 </script>
 
 <style>
-ul {
-  list-style-type: none;
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #f47c20 #f0f1f3;
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #f47c20;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #43464e;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #f0f1f3;
+}
+
+p,
+ul,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
   padding: 0;
 }
 
 li {
-  margin: 0 10px;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  text-decoration: none;
 }
 
 #app {
