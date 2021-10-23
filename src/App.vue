@@ -7,14 +7,14 @@
   <form @submit.prevent="onSubmit" class="center">
     <label>
       Ваше имя:
-      <input type="text" v-model.trim="name" required />
+      <input type="text" v-model.lazy.trim="name" required />
     </label>
 
     <br /><br />
 
     <textarea
-      cols="35"
-      rows="5"
+      cols="50"
+      rows="4"
       placeholder="Введите текст сообщения..."
       v-model.trim="comment"
       required
@@ -33,14 +33,12 @@ import "./assets/styles/normalizer.css";
 
 import Button from "./components/Button.vue";
 import List from "./components/List.vue";
-// import Counter from "./components/Counter.vue";
 
 export default {
   name: "App",
   components: {
     Button,
     List,
-    // Counter,
   },
   data() {
     return {
@@ -51,19 +49,19 @@ export default {
           id: 1,
           name: "Гость",
           comment: "Пример тестового поста пользователя в гостей книге",
-          time: "21-10-2021",
+          time: "21.10.2021",
         },
         {
           id: 2,
           name: "Мария",
           comment: "Пример поста Марии",
-          time: "22-10-2021",
+          time: "22.10.2021",
         },
         {
           id: 3,
           name: "Джон",
           comment: "Пример поста Джона из этого же массива обьектов",
-          time: "23-10-2021",
+          time: "23.10.2021",
         },
       ],
     };
@@ -125,6 +123,10 @@ html {
   background-color: #f0f1f3;
 }
 
+* {
+  outline-color: #fb6624;
+}
+
 p,
 ul,
 li,
@@ -152,12 +154,13 @@ a {
   text-decoration: none;
 }
 
+textarea {
+  max-width: 100%;
+  resize: vertical;
+}
+
 body {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 87, 34, 1) 0%,
-    rgba(255, 193, 7, 1) 100%
-  );
+  background: linear-gradient(45deg, #f17c58, #eb722c, #ffdc18, #ff3706);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }

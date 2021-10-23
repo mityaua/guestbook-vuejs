@@ -1,11 +1,17 @@
 <template>
   <li class="item">
-    <div class="item__info">
-      <span class="item__name">{{ post.name }}</span>
-      <span>{{ post.time }}</span>
+    <div class="item__photo">
+      <img src="favicon.png" alt="аватар" width="100" height="100" />
     </div>
 
-    <p class="item__comment">{{ post.comment }}</p>
+    <div>
+      <div class="item__info">
+        <span class="item__name">{{ post.name }}</span>
+        <span>{{ post.time }}</span>
+      </div>
+
+      <p class="item__comment">{{ post.comment }}</p>
+    </div>
   </li>
 </template>
 
@@ -30,16 +36,20 @@ export default {
 
 <style scoped>
 .item {
+  display: flex;
   background-color: #e7e7e7;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
 }
 
+.item__photo {
+  margin-right: 20px;
+}
+
 .item__info {
   padding-bottom: 10px;
   border-bottom: 1px solid #d4d1d1;
-  /* box-shadow: 0px 2px 3px 4px tomato; */
 }
 
 .item__name {
