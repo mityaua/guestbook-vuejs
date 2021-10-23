@@ -4,16 +4,18 @@
 
   <List v-bind:posts="posts" />
 
-  <form @submit.prevent="onSubmit" class="center">
+  <form @submit.prevent="onSubmit" class="form center">
     <label>
       Ваше имя:
       <input
         type="text"
         v-model.lazy.trim="name"
         required
+        pattern=".{2,20}"
         maxlength="40"
         spellcheck="false"
         placeholder="До 40 символов"
+        class="form__name"
       />
     </label>
 
@@ -25,16 +27,18 @@
       placeholder="Введите текст сообщения..."
       v-model.trim="comment"
       required
+      v-bind:minlength="min"
       v-bind:maxlength="max"
+      class="form__comment"
     ></textarea>
 
     <div class="preview">
-      <p>Предпросмотр:</p>
-      <p v-if="name">
+      <p class="preview__title">Предпросмотр:</p>
+      <p v-if="name" class="preview__name">
         Имя: <b>{{ name }}</b>
       </p>
       <p v-if="comment" class="preview__comment">Сообщение: {{ comment }}</p>
-      <p v-if="comment" class="preview__comment">
+      <p v-if="comment" class="preview__length">
         Осталось символов: {{ max - comment.length }}
       </p>
     </div>
@@ -61,6 +65,7 @@ export default {
     return {
       name: "",
       comment: "",
+      min: 2,
       max: 200,
       posts: [
         {
@@ -179,13 +184,9 @@ a {
   text-decoration: none;
 }
 
-textarea {
-  max-width: 100%;
-  resize: vertical;
-}
-
 body {
-  background: linear-gradient(45deg, #f17c58, #eb722c, #ffdc18, #ff3706);
+  /* background: linear-gradient(45deg, #f17c58, #eb722c, #ffdc18, #ff3706); */
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -195,10 +196,17 @@ body {
     helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
   color: #2c3e50;
 
-  padding: 50px;
+  padding: 10px;
   background-color: #fff;
-  margin: 50px;
+  margin: 10px;
   border-radius: 50px;
+}
+
+@media screen and (min-width: 768px) {
+  #app {
+    padding: 50px;
+    margin: 50px;
+  }
 }
 
 .title {
@@ -209,21 +217,48 @@ body {
   text-align: center;
 }
 
-.preview {
+.form {
   /* padding: 10px; */
 }
 
-.preview__comment {
-  white-space: pre-line;
+.form__name {
+  border: 2px solid rgb(44, 62, 80, 0.5);
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.form__comment {
+  max-width: 100%;
+  border: 2px solid rgb(44, 62, 80, 0.5);
+  border-radius: 10px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.preview {
+  padding: 10px;
 
   transition: opacity 250ms linear;
   opacity: 0.5;
 }
 
-.preview__comment:hover,
-.preview__comment:focus {
+.preview:hover,
+.preview:focus {
   transition: opacity 250ms linear;
   opacity: 1;
+}
+
+.preview__title {
+  margin-bottom: 10px;
+}
+
+.preview__name {
+  margin-bottom: 10px;
+}
+
+.preview__comment {
+  margin-bottom: 10px;
+  white-space: pre-line;
 }
 
 @keyframes gradient {

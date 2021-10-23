@@ -42,10 +42,14 @@ export default {
 <style scoped>
 .item {
   display: flex;
-  background-color: #e7e7e7;
+  background-color: rgba(231, 229, 229, 0.4);
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
+}
+
+.item:nth-child(even) {
+  background-color: rgba(248, 217, 188, 0.3);
 }
 
 .item__photo {
@@ -53,13 +57,27 @@ export default {
 }
 
 .item__info {
+  display: flex;
+  flex-direction: column;
   padding-bottom: 10px;
   border-bottom: 1px solid #d4d1d1;
 }
 
+@media screen and (min-width: 768px) {
+  .item__info {
+    display: block;
+  }
+}
+
 .item__name {
-  margin-right: 10px;
+  margin-bottom: 10px;
   font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+  .item__name {
+    margin-right: 10px;
+  }
 }
 
 .item__comment {
