@@ -97,7 +97,7 @@ export default {
 <style>
 html {
   scroll-behavior: smooth;
-  scrollbar-color: #f47c20 #f0f1f3;
+  scrollbar-color: #25272a #f0f1f3;
   scrollbar-width: thin;
 }
 
@@ -107,7 +107,7 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #f47c20;
+  background-color: #25272a;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -145,10 +145,25 @@ a {
   text-decoration: none;
 }
 
+body {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 87, 34, 1) 0%,
+    rgba(255, 193, 7, 1) 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
 #app {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
     helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
   color: #2c3e50;
+
+  padding: 50px;
+  background-color: #fff;
+  margin: 50px;
+  border-radius: 50px;
 }
 
 .center {
@@ -158,5 +173,17 @@ a {
 .preview {
   white-space: pre-line;
   opacity: 0.5;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 </style>
