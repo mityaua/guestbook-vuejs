@@ -1,59 +1,13 @@
 <template>
-  <header>
-    <h1 class="title center">Гостевая книга</h1>
-    <p class="center">{{ total }}</p>
+  <header class="header">
+    <h1 class="title">Гостевая книга</h1>
+    <p>{{ total }}</p>
   </header>
 
   <main>
-    <List v-bind:posts="posts" />
-
+    <Posts :posts="posts" />
     <hr />
-
-    <form @submit.prevent="onSubmit" class="form center">
-      <label>
-        Ваше имя:
-        <input
-          type="text"
-          class="form__name"
-          title="Имя может быть от 2 до 40 символов"
-          v-model.lazy.trim="name"
-          pattern=".{2,40}"
-          maxlength="40"
-          spellcheck="false"
-          required
-        />
-      </label>
-
-      <br /><br />
-
-      <textarea
-        cols="50"
-        rows="4"
-        placeholder="Введите текст сообщения..."
-        title="Длинна сообщения от 2 до 200 символов"
-        v-model.trim="comment"
-        required
-        v-bind:minlength="min"
-        v-bind:maxlength="max"
-        class="textarea__comment"
-      ></textarea>
-
-      <div>
-        <span v-if="comment" class="textarea__length">{{
-          max - comment.length
-        }}</span>
-      </div>
-
-      <div class="preview">
-        <p class="preview__title">Предпросмотр:</p>
-        <p v-if="name" class="preview__name">
-          Имя: <b>{{ name }}</b>
-        </p>
-        <p v-if="comment" class="preview__comment">Сообщение: {{ comment }}</p>
-      </div>
-
-      <Button type="submit">Опубликовать</Button>
-    </form>
+    <Form :addPost="addPost" />
   </main>
 </template>
 
@@ -61,22 +15,18 @@
 import "./assets/styles/normalizer.css";
 import "mosha-vue-toastify/dist/style.css";
 
-import Button from "./components/Button.vue";
-import List from "./components/List.vue";
+import Posts from "./components/Posts.vue";
+import Form from "./components/Form.vue";
 import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "App",
   components: {
-    Button,
-    List,
+    Posts,
+    Form,
   },
   data() {
     return {
-      name: "",
-      comment: "",
-      min: 2,
-      max: 200,
       posts: [
         {
           id: 1,
@@ -86,14 +36,16 @@ export default {
         },
         {
           id: 2,
-          name: "Doctor Who",
-          comment: "Пример поста Марии",
+          name: "Kiwi",
+          comment:
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
           time: "22.10.2021",
         },
         {
           id: 3,
-          name: "Джон",
-          comment: "Пример поста Джона из этого же массива обьектов",
+          name: "Parrot 66",
+          comment:
+            "Lorem Ipsum - это текст-'рыба', часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной 'рыбой' для текстов на латинице с начала XVI века.",
           time: "23.10.2021",
         },
       ],
@@ -105,32 +57,20 @@ export default {
     },
   },
   methods: {
-    onSubmit() {
-      this.posts.push({
-        id: new Date().valueOf(),
-        name: this.name,
-        comment: this.comment,
-        time: `${new Date()
-          .toISOString()
-          .split("T")[0]
-          .split("-")
-          .reverse()
-          .join(".")} (${new Date().toString().split(" ")[4]})`,
-      });
+    async addPost(post) {
+      try {
+        await this.posts.push(post); // Якобы асинхронщина
 
-      createToast("Ваша запись успешно добавлена", {
-        showIcon: true,
-        timeout: 2000,
-        position: "top-center",
-        type: "success",
-        transition: "zoom",
-      });
-
-      this.reset();
-    },
-    reset() {
-      this.name = "";
-      this.comment = "";
+        createToast("Ваша запись успешно добавлена", {
+          showIcon: true,
+          timeout: 2000,
+          position: "top-center",
+          type: "success",
+          transition: "zoom",
+        });
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
@@ -192,20 +132,23 @@ a {
 }
 
 body {
+  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
+    helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
+  font-size: 16px;
+
+  color: #2c3e50;
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
+
   animation: gradient 15s ease infinite;
 }
 
 #app {
-  font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
-    helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
-  color: #2c3e50;
-
   padding: 10px;
-  background-color: #fff;
   margin: 10px;
   border-radius: 50px;
+
+  background-color: #fff;
 }
 
 @media screen and (min-width: 768px) {
@@ -215,83 +158,12 @@ body {
   }
 }
 
-.title {
-  margin-bottom: 10px;
-}
-
-.center {
+.header {
   text-align: center;
 }
 
-.form {
-  position: relative;
-  margin: 0 auto;
-  padding-top: 20px;
-  max-width: 400px;
-}
-
-.form__name {
-  border: 2px solid rgb(44, 62, 80, 0.3);
-  border-radius: 10px;
-  padding: 5px;
-}
-
-.form__name:focus:invalid {
-  outline: 2px solid #f73d3d;
-}
-
-.form__name:focus:valid {
-  outline: 2px solid #40ae00;
-}
-
-.textarea__comment {
-  max-width: 100%;
-  border: 2px solid rgb(44, 62, 80, 0.3);
-  border-radius: 10px;
-  padding: 15px;
-  resize: vertical;
-}
-
-.textarea__length {
-  position: absolute;
-  right: -10px;
-  top: 60px;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  color: #2c3e50;
-  background-color: #b6b9c2;
-  border-radius: 50%;
-}
-
-.preview {
-  padding: 10px;
-
-  transition: opacity 250ms linear;
-  opacity: 0.5;
-}
-
-.preview:hover,
-.preview:focus {
-  transition: opacity 250ms linear;
-  opacity: 1;
-}
-
-.preview__title {
+.title {
   margin-bottom: 10px;
-}
-
-.preview__name {
-  margin-bottom: 10px;
-  word-break: break-word;
-}
-
-.preview__comment {
-  margin-bottom: 10px;
-  white-space: pre-line;
-  word-break: break-word;
 }
 
 @keyframes gradient {

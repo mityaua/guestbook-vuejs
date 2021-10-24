@@ -19,7 +19,7 @@
 import Avatar from "vue-avatar-component";
 
 export default {
-  name: "ListItem",
+  name: "Post",
   components: {
     Avatar,
   },
@@ -87,7 +87,7 @@ export default {
 
 @media screen and (min-width: 768px) {
   .item__name {
-    margin-right: 10px;
+    margin-right: 5px;
   }
 }
 

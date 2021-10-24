@@ -1,15 +1,15 @@
 <template>
   <ul class="list">
     <template v-for="post in posts" v-bind:key="post.id">
-      <ListItem v-bind:post="post" />
+      <ListItem :post="post" />
     </template>
   </ul>
 </template>
 
 <script>
-import ListItem from "./ListItem";
+import ListItem from "./Post";
 export default {
-  name: "List",
+  name: "Posts",
   components: {
     ListItem,
   },

@@ -1,10 +1,5 @@
-// Компонент кнопки с привязкой типа, слотом, именем компонента, пропсами (type)
-
 <template>
-  <button
-    v-bind:type="type"
-    v-bind:class="{ btn: true, 'btn--outlined': outlined }"
-  >
+  <button :type="type" :class="{ btn: true, 'btn--outlined': outlined }">
     <slot></slot>
   </button>
 </template>
@@ -16,7 +11,7 @@ export default {
     type: {
       type: String,
       default: "button",
-      required: true, // Если нужно сделать проп обязательным
+      required: true,
     },
     outlined: {
       type: Boolean,
@@ -26,13 +21,10 @@ export default {
 };
 </script>
 
-// Можно использовать sass (доставить два пакета)
 <style scoped>
 .btn {
   display: inline-block;
   min-width: 100px;
-  /* Убрать марджины! */
-  margin-right: 10px;
   padding: 15px;
   border: 1px solid #fff;
   border-radius: 30px;
