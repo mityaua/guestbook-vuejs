@@ -7,7 +7,7 @@
     <div>
       <div class="item__info">
         <span class="item__name">{{ post.name }}</span>
-        <span>{{ post.time }}</span>
+        <span>{{ post.date }} {{ post.time }}</span>
       </div>
 
       <p class="item__comment">{{ post.comment }}</p>
@@ -26,14 +26,7 @@ export default {
   props: {
     post: {
       type: Object,
-      default: function () {
-        return {
-          id: 1,
-          name: "Гость",
-          comment: "",
-          time: "",
-        };
-      },
+      requred: true,
     },
   },
 };

@@ -59,15 +59,17 @@ export default {
         id: new Date().valueOf(),
         name: this.name,
         comment: this.comment,
-        time: `${new Date()
+        date: new Date()
           .toISOString()
           .split("T")[0]
           .split("-")
           .reverse()
-          .join(".")} (${new Date().toString().split(" ")[4]})`,
+          .join("."),
+        time: new Date().toString().split(" ")[4],
       };
 
       this.addPost(newPost);
+
       this.reset();
     },
     reset() {

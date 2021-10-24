@@ -41,8 +41,7 @@ export default {
   cursor: pointer;
 }
 
-.btn:hover,
-.btn:focus {
+.btn:hover {
   opacity: 0.8;
   transition: opacity 250ms linear;
 }
