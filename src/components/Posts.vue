@@ -1,6 +1,6 @@
 <template>
   <ul class="list">
-    <template v-for="post in posts" v-bind:key="post.id">
+    <template v-for="post in posts" :key="post.id">
       <ListItem :post="post" :deletePost="deletePost" />
     </template>
   </ul>
