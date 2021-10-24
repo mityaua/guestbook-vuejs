@@ -47,7 +47,7 @@ export default {
 }
 
 .preview__text {
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
   white-space: pre-line;
   word-break: break-word;
 }

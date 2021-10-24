@@ -1,9 +1,10 @@
 <template>
   <li class="item">
     <div class="item__photo">
+      <!-- Написать свой компонент вместо библиотеки -->
       <avatar
         :fullname="post.name"
-        :size="100"
+        :size="isMobile"
         :radius="10"
         :title="avatarTitle"
       ></avatar>
@@ -12,7 +13,9 @@
     <div>
       <div class="item__info">
         <span class="item__name">{{ post.name }}</span>
-        <span>{{ post.date }} {{ post.time }}</span>
+        <span
+          ><time :datetime="dateTime">{{ dateTime }}</time></span
+        >
       </div>
 
       <p class="item__comment">{{ post.comment }}</p>
@@ -21,8 +24,8 @@
     <button
       @click="deletePost(post.id)"
       class="item__delete"
-      aria-label="Удалить пост"
-      title="Удалить пост"
+      :aria-label="title"
+      :title="title"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -47,6 +50,11 @@ export default {
   components: {
     Avatar,
   },
+  data() {
+    return {
+      title: "Удалить пост",
+    };
+  },
   props: {
     post: {
       type: Object,
@@ -63,6 +71,20 @@ export default {
     avatarTitle() {
       return `Аватар ${this.post.name}`;
     },
+    dateTime() {
+      return `${this.post.date} ${this.post.time}`;
+    },
+    isMobile() {
+      if (
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        )
+      ) {
+        return 50;
+      } else {
+        return 100;
+      }
+    },
   },
 };
 </script>
@@ -75,6 +97,14 @@ export default {
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
+
+  transition: background-color 2250ms linear;
+}
+
+.item:hover,
+.item:focus {
+  background-color: rgba(231, 229, 229, 0.8);
+  transition: background-color 2250ms linear;
 }
 
 .item:nth-child(even) {
@@ -84,11 +114,6 @@ export default {
 .item:nth-child(even):hover,
 .item:nth-child(even):focus {
   background-color: rgba(248, 217, 188, 0.6);
-}
-
-.item:hover,
-.item:focus {
-  background-color: rgba(231, 229, 229, 0.8);
 }
 
 .item__photo {

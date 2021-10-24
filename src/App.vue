@@ -1,12 +1,9 @@
 <template>
-  <header class="header">
-    <h1 class="title">Гостевая книга</h1>
-    <p>{{ total }}</p>
-  </header>
+  <Header :totalPostCount="total">Гостевая книга</Header>
 
   <main>
     <Posts v-if="posts.length" :posts="posts" :deletePost="deletePost" />
-    <p v-else>😮 Книга пустая. Добавьте первую запись!</p>
+    <FallBack v-else>😮 Книга пустая. Добавьте первую запись!</FallBack>
     <hr />
     <Form :addPost="addPost" />
   </main>
@@ -16,6 +13,8 @@
 import "./assets/styles/normalizer.css";
 import "mosha-vue-toastify/dist/style.css";
 
+import Header from "./components/Header.vue";
+import FallBack from "./components/FallBack.vue";
 import Posts from "./components/Posts.vue";
 import Form from "./components/Form.vue";
 import { createToast } from "mosha-vue-toastify";
@@ -23,6 +22,8 @@ import { createToast } from "mosha-vue-toastify";
 export default {
   name: "App",
   components: {
+    Header,
+    FallBack,
     Posts,
     Form,
   },
@@ -137,7 +138,7 @@ a {
 body {
   font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui,
     helvetica neue, helvetica, Ubuntu, roboto, noto, arial, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   line-height: normal;
 
   color: #2c3e50;
@@ -160,14 +161,6 @@ body {
     padding: 50px;
     margin: 50px;
   }
-}
-
-.header {
-  text-align: center;
-}
-
-.title {
-  margin-bottom: 10px;
 }
 
 @keyframes gradient {
