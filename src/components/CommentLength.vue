@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span v-if="comment" class="length">{{ max - comment.length }}</span>
+    <span v-if="comment" class="length">{{ commentLength }}</span>
   </div>
 </template>
 
@@ -15,6 +15,11 @@ export default {
     comment: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    commentLength() {
+      return this.max - this.comment.length;
     },
   },
 };

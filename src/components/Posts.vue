@@ -1,7 +1,7 @@
 <template>
   <ul class="list">
     <template v-for="post in posts" v-bind:key="post.id">
-      <ListItem :post="post" />
+      <ListItem :post="post" :deletePost="deletePost" />
     </template>
   </ul>
 </template>
@@ -16,6 +16,12 @@ export default {
   props: {
     posts: {
       type: Array,
+      default: function () {
+        return [];
+      },
+    },
+    deletePost: {
+      type: Function,
       default: function () {
         return [];
       },

@@ -5,7 +5,8 @@
   </header>
 
   <main>
-    <Posts :posts="posts" />
+    <Posts v-if="posts.length" :posts="posts" :deletePost="deletePost" />
+    <p v-else>😮 Книга пустая. Добавьте первую запись!</p>
     <hr />
     <Form :addPost="addPost" />
   </main>
@@ -27,29 +28,13 @@ export default {
   },
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          name: "Гость",
-          comment: "Пример тестового поста пользователя в гостей книге",
-          time: "21.10.2021",
-        },
-        {
-          id: 2,
-          name: "Kiwi",
-          comment:
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. ",
-          time: "22.10.2021",
-        },
-        {
-          id: 3,
-          name: "Parrot 66",
-          comment:
-            "Lorem Ipsum - это текст-'рыба', часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной 'рыбой' для текстов на латинице с начала XVI века.",
-          time: "23.10.2021",
-        },
-      ],
+      posts: [],
     };
+  },
+  mounted() {
+    if (localStorage.getItem("posts")) {
+      this.posts = JSON.parse(localStorage.getItem("posts")) || [];
+    }
   },
   computed: {
     total() {
@@ -61,6 +46,9 @@ export default {
       try {
         await this.posts.push(post); // Якобы асинхронщина
 
+        localStorage.setItem("posts", JSON.stringify(this.posts));
+
+        // Вынести в отдельный компонент
         createToast("Ваша запись успешно добавлена", {
           showIcon: true,
           timeout: 2000,
@@ -71,6 +59,21 @@ export default {
       } catch (error) {
         console.error(error);
       }
+    },
+
+    deletePost(postId) {
+      this.posts = this.posts.filter((post) => post.id !== postId);
+
+      localStorage.setItem("posts", JSON.stringify(this.posts));
+
+      // Вынести в отдельный компонент
+      createToast("Запись была удалена", {
+        showIcon: true,
+        timeout: 2000,
+        position: "top-center",
+        type: "warning",
+        transition: "zoom",
+      });
     },
   },
 };
