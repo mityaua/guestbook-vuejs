@@ -52,6 +52,16 @@ export default {
   background-color: rgba(248, 217, 188, 0.3);
 }
 
+.item:nth-child(even):hover,
+.item:nth-child(even):focus {
+  background-color: rgba(248, 217, 188, 0.6);
+}
+
+.item:hover,
+.item:focus {
+  background-color: rgba(231, 229, 229, 0.8);
+}
+
 .item__photo {
   margin-right: 20px;
 }
@@ -72,6 +82,7 @@ export default {
 .item__name {
   margin-bottom: 10px;
   font-weight: bold;
+  word-break: break-word;
 }
 
 @media screen and (min-width: 768px) {
@@ -82,5 +93,6 @@ export default {
 
 .item__comment {
   padding: 10px 0;
+  word-break: break-word;
 }
 </style>

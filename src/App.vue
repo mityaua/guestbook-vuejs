@@ -1,50 +1,60 @@
 <template>
-  <h1 class="title center">Гостевая книга</h1>
-  <p class="center">{{ total }}</p>
+  <header>
+    <h1 class="title center">Гостевая книга</h1>
+    <p class="center">{{ total }}</p>
+  </header>
 
-  <List v-bind:posts="posts" />
+  <main>
+    <List v-bind:posts="posts" />
 
-  <form @submit.prevent="onSubmit" class="form center">
-    <label>
-      Ваше имя:
-      <input
-        type="text"
-        v-model.lazy.trim="name"
+    <hr />
+
+    <form @submit.prevent="onSubmit" class="form center">
+      <label>
+        Ваше имя:
+        <input
+          type="text"
+          class="form__name"
+          title="Имя может быть от 2 до 40 символов"
+          v-model.lazy.trim="name"
+          pattern=".{2,40}"
+          maxlength="40"
+          spellcheck="false"
+          required
+        />
+      </label>
+
+      <br /><br />
+
+      <textarea
+        cols="50"
+        rows="4"
+        placeholder="Введите текст сообщения..."
+        title="Длинна сообщения от 2 до 200 символов"
+        v-model.trim="comment"
         required
-        pattern=".{2,20}"
-        maxlength="40"
-        spellcheck="false"
-        placeholder="До 40 символов"
-        class="form__name"
-      />
-    </label>
+        v-bind:minlength="min"
+        v-bind:maxlength="max"
+        class="textarea__comment"
+      ></textarea>
 
-    <br /><br />
+      <div>
+        <span v-if="comment" class="textarea__length">{{
+          max - comment.length
+        }}</span>
+      </div>
 
-    <textarea
-      cols="50"
-      rows="4"
-      placeholder="Введите текст сообщения..."
-      v-model.trim="comment"
-      required
-      v-bind:minlength="min"
-      v-bind:maxlength="max"
-      class="form__comment"
-    ></textarea>
+      <div class="preview">
+        <p class="preview__title">Предпросмотр:</p>
+        <p v-if="name" class="preview__name">
+          Имя: <b>{{ name }}</b>
+        </p>
+        <p v-if="comment" class="preview__comment">Сообщение: {{ comment }}</p>
+      </div>
 
-    <div class="preview">
-      <p class="preview__title">Предпросмотр:</p>
-      <p v-if="name" class="preview__name">
-        Имя: <b>{{ name }}</b>
-      </p>
-      <p v-if="comment" class="preview__comment">Сообщение: {{ comment }}</p>
-      <p v-if="comment" class="preview__length">
-        Осталось символов: {{ max - comment.length }}
-      </p>
-    </div>
-
-    <Button type="submit">Опубликовать</Button>
-  </form>
+      <Button type="submit">Опубликовать</Button>
+    </form>
+  </main>
 </template>
 
 <script>
@@ -93,14 +103,6 @@ export default {
     total() {
       return `Всего записей: ${this.posts.length}`;
     },
-    commentTime() {
-      return `${new Date()
-        .toISOString()
-        .split("T")[0]
-        .split("-")
-        .reverse()
-        .join(".")} (${new Date().toString().split(" ")[4]})`;
-    },
   },
   methods: {
     onSubmit() {
@@ -108,7 +110,12 @@ export default {
         id: new Date().valueOf(),
         name: this.name,
         comment: this.comment,
-        time: this.commentTime,
+        time: `${new Date()
+          .toISOString()
+          .split("T")[0]
+          .split("-")
+          .reverse()
+          .join(".")} (${new Date().toString().split(" ")[4]})`,
       });
 
       createToast("Ваша запись успешно добавлена", {
@@ -185,7 +192,6 @@ a {
 }
 
 body {
-  /* background: linear-gradient(45deg, #f17c58, #eb722c, #ffdc18, #ff3706); */
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -218,21 +224,46 @@ body {
 }
 
 .form {
-  /* padding: 10px; */
+  position: relative;
+  margin: 0 auto;
+  padding-top: 20px;
+  max-width: 400px;
 }
 
 .form__name {
-  border: 2px solid rgb(44, 62, 80, 0.5);
+  border: 2px solid rgb(44, 62, 80, 0.3);
   border-radius: 10px;
   padding: 5px;
 }
 
-.form__comment {
+.form__name:focus:invalid {
+  outline: 2px solid #f73d3d;
+}
+
+.form__name:focus:valid {
+  outline: 2px solid #40ae00;
+}
+
+.textarea__comment {
   max-width: 100%;
-  border: 2px solid rgb(44, 62, 80, 0.5);
+  border: 2px solid rgb(44, 62, 80, 0.3);
   border-radius: 10px;
-  padding: 10px;
+  padding: 15px;
   resize: vertical;
+}
+
+.textarea__length {
+  position: absolute;
+  right: -10px;
+  top: 60px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  color: #2c3e50;
+  background-color: #b6b9c2;
+  border-radius: 50%;
 }
 
 .preview {
@@ -254,11 +285,13 @@ body {
 
 .preview__name {
   margin-bottom: 10px;
+  word-break: break-word;
 }
 
 .preview__comment {
   margin-bottom: 10px;
   white-space: pre-line;
+  word-break: break-word;
 }
 
 @keyframes gradient {
