@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :title="`Осталось симовлов: ${commentLength}`">
     <span v-if="comment" class="length">{{ commentLength }}</span>
   </div>
 </template>
