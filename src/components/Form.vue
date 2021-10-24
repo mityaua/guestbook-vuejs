@@ -95,6 +95,8 @@ export default {
   border: 2px solid rgb(44, 62, 80, 0.3);
   border-radius: 10px;
   padding: 5px;
+
+  font: inherit;
 }
 
 .form__name:focus:invalid {

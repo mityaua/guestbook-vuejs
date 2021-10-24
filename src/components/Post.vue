@@ -1,7 +1,12 @@
 <template>
   <li class="item">
     <div class="item__photo">
-      <avatar :fullname="post.name" :size="100" :radius="10"></avatar>
+      <avatar
+        :fullname="post.name"
+        :size="100"
+        :radius="10"
+        :title="avatarTitle"
+      ></avatar>
     </div>
 
     <div>
@@ -13,7 +18,12 @@
       <p class="item__comment">{{ post.comment }}</p>
     </div>
 
-    <button @click="deletePost(post.id)" class="item__delete">
+    <button
+      @click="deletePost(post.id)"
+      class="item__delete"
+      aria-label="Удалить пост"
+      title="Удалить пост"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 41.756 41.756"
@@ -47,6 +57,11 @@ export default {
       default: function () {
         return [];
       },
+    },
+  },
+  computed: {
+    avatarTitle() {
+      return `Аватар ${this.post.name}`;
     },
   },
 };
