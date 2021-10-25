@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import store from "./store";
+
 import "./assets/styles/normalizer.css";
 import "mosha-vue-toastify/dist/style.css";
 
@@ -26,6 +28,14 @@ export default {
     FallBack,
     Posts,
     Form,
+  },
+  // Пример тестового доступа к стору
+  setup() {
+    const count = store.state.count;
+
+    return {
+      count,
+    };
   },
   data() {
     return {
@@ -49,7 +59,6 @@ export default {
 
         localStorage.setItem("posts", JSON.stringify(this.posts));
 
-        // Вынести в отдельный компонент
         createToast("Ваша запись успешно добавлена", {
           showIcon: true,
           timeout: 2000,
@@ -67,7 +76,6 @@ export default {
 
       localStorage.setItem("posts", JSON.stringify(this.posts));
 
-      // Вынести в отдельный компонент
       createToast("Запись была удалена", {
         showIcon: true,
         timeout: 2000,
