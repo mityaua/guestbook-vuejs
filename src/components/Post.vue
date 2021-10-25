@@ -98,13 +98,13 @@ export default {
   margin-bottom: 10px;
   border-radius: 10px;
 
-  transition: background-color 2250ms linear;
+  transition: background-color 250ms linear;
 }
 
 .item:hover,
 .item:focus {
   background-color: rgba(231, 229, 229, 0.8);
-  transition: background-color 2250ms linear;
+  transition: background-color 250ms linear;
 }
 
 .item:nth-child(even) {
