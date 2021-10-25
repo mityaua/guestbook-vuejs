@@ -1,16 +1,16 @@
 <template>
-  <Header :totalPostCount="total">Гостевая книга</Header>
+  <Header>Гостевая книга</Header>
 
   <main>
-    <Posts v-if="posts.length" :posts="posts" :deletePost="deletePost" />
+    <Posts v-if="allPostsCount" />
     <FallBack v-else>😮 Книга пустая. Добавьте первую запись!</FallBack>
     <hr />
-    <Form :addPost="addPost" />
+    <Form />
   </main>
 </template>
 
 <script>
-import store from "./store";
+import { mapGetters, mapActions } from "vuex";
 
 import "./assets/styles/normalizer.css";
 import "mosha-vue-toastify/dist/style.css";
@@ -19,7 +19,6 @@ import Header from "./components/Header.vue";
 import FallBack from "./components/FallBack.vue";
 import Posts from "./components/Posts.vue";
 import Form from "./components/Form.vue";
-import { createToast } from "mosha-vue-toastify";
 
 export default {
   name: "App",
@@ -29,62 +28,12 @@ export default {
     Posts,
     Form,
   },
-  // Пример тестового доступа к стору
-  setup() {
-    const count = store.state.count;
-
-    return {
-      count,
-    };
-  },
-  data() {
-    return {
-      posts: [],
-    };
-  },
   mounted() {
-    if (localStorage.getItem("posts")) {
-      this.posts = JSON.parse(localStorage.getItem("posts")) || [];
-    }
+    this.getPosts();
+    this.setPosts();
   },
-  computed: {
-    total() {
-      return `Всего записей: ${this.posts.length}`;
-    },
-  },
-  methods: {
-    async addPost(post) {
-      try {
-        await this.posts.push(post); // Якобы асинхронщина
-
-        localStorage.setItem("posts", JSON.stringify(this.posts));
-
-        createToast("Ваша запись успешно добавлена", {
-          showIcon: true,
-          timeout: 2000,
-          position: "top-center",
-          type: "success",
-          transition: "zoom",
-        });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-
-    deletePost(postId) {
-      this.posts = this.posts.filter((post) => post.id !== postId);
-
-      localStorage.setItem("posts", JSON.stringify(this.posts));
-
-      createToast("Запись была удалена", {
-        showIcon: true,
-        timeout: 2000,
-        position: "top-center",
-        type: "warning",
-        transition: "zoom",
-      });
-    },
-  },
+  computed: mapGetters(["allPosts", "allPostsCount"]),
+  methods: mapActions(["getPosts", "setPosts"]),
 };
 </script>
 

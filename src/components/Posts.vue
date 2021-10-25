@@ -1,31 +1,23 @@
 <template>
   <ul class="list">
-    <template v-for="post in posts" :key="post.id">
-      <ListItem :post="post" :deletePost="deletePost" />
+    <template v-for="post in allPosts" :key="post.id">
+      <Post :post="post" />
     </template>
   </ul>
 </template>
 
 <script>
-import ListItem from "./Post";
+import { mapGetters } from "vuex";
+
+import Post from "./Post";
+
 export default {
   name: "Posts",
   components: {
-    ListItem,
+    Post,
   },
-  props: {
-    posts: {
-      type: Array,
-      default: function () {
-        return [];
-      },
-    },
-    deletePost: {
-      type: Function,
-      default: function () {
-        return [];
-      },
-    },
+  computed: {
+    ...mapGetters(["allPosts"]),
   },
 };
 </script>

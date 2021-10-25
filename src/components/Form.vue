@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit" class="form">
+  <form @submit.prevent="submit" class="form">
     <input
       type="text"
       class="form__name"
@@ -31,6 +31,9 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
+import { createToast } from "mosha-vue-toastify";
+
 import CommentLength from "./CommentLength.vue";
 import CommentPreview from "./CommentPreview.vue";
 import Button from "./Button.vue";
@@ -42,9 +45,6 @@ export default {
     CommentPreview,
     Button,
   },
-  props: {
-    addPost: { type: Function, required: true },
-  },
   data() {
     return {
       name: "",
@@ -54,7 +54,11 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
+    ...mapMutations(["createPost"]),
+    ...mapActions(["setPosts"]),
+    submit() {
+      if (this.name === "" || this.comment === "") return;
+
       const newPost = {
         id: new Date().valueOf(),
         name: this.name,
@@ -68,7 +72,16 @@ export default {
         time: new Date().toString().split(" ")[4],
       };
 
-      this.addPost(newPost);
+      this.createPost(newPost);
+      this.setPosts();
+
+      createToast("Запись успешно добавлена", {
+        showIcon: true,
+        timeout: 2000,
+        position: "top-center",
+        type: "success",
+        transition: "zoom",
+      });
 
       this.reset();
     },

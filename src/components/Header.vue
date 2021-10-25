@@ -1,19 +1,16 @@
 <template>
   <header class="header">
     <h1 class="title"><slot></slot></h1>
-    <p>{{ totalPostCount }}</p>
+    <p>Всего записей: {{ allPostsCount }}</p>
   </header>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Header",
-  props: {
-    totalPostCount: {
-      type: String,
-      required: true,
-    },
-  },
+  computed: mapGetters(["allPostsCount"]),
 };
 </script>
 

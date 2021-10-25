@@ -1,10 +1,9 @@
 <template>
   <li class="item">
     <div class="item__photo">
-      <!-- Написать свой компонент вместо библиотеки -->
       <avatar
         :fullname="post.name"
-        :size="isMobile"
+        :size="checkMobile"
         :radius="10"
         :title="avatarTitle"
       ></avatar>
@@ -22,7 +21,7 @@
     </div>
 
     <button
-      @click="deletePost(post.id)"
+      @click="deleteItem(post.id)"
       class="item__delete"
       :aria-label="title"
       :title="title"
@@ -43,6 +42,9 @@
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
+import { createToast } from "mosha-vue-toastify";
+
 import Avatar from "vue-avatar-component";
 
 export default {
@@ -52,19 +54,13 @@ export default {
   },
   data() {
     return {
-      title: "Удалить пост",
+      title: "Удалить запись",
     };
   },
   props: {
     post: {
       type: Object,
       requred: true,
-    },
-    deletePost: {
-      type: Function,
-      default: function () {
-        return [];
-      },
     },
   },
   computed: {
@@ -74,7 +70,7 @@ export default {
     dateTime() {
       return `${this.post.date} ${this.post.time}`;
     },
-    isMobile() {
+    checkMobile() {
       if (
         /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
           navigator.userAgent
@@ -84,6 +80,22 @@ export default {
       } else {
         return 100;
       }
+    },
+  },
+  methods: {
+    ...mapMutations(["deletePost"]),
+    ...mapActions(["setPosts"]),
+    deleteItem(id) {
+      this.deletePost(id);
+      this.setPosts();
+
+      createToast("Запись была удалена", {
+        showIcon: true,
+        timeout: 2000,
+        position: "top-center",
+        type: "warning",
+        transition: "zoom",
+      });
     },
   },
 };

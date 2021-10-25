@@ -30,14 +30,18 @@ export default {
   position: absolute;
   right: -9px;
   top: 58px;
+
   display: inline-flex;
   justify-content: center;
   align-items: center;
+
   width: 35px;
   height: 35px;
+  border-radius: 50%;
+
   color: #2c3e50;
   background-color: #c5c7ce;
-  border-radius: 50%;
+
   user-select: none;
 }
 </style>
