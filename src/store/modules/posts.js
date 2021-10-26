@@ -26,7 +26,8 @@ export default {
       state.posts = posts;
     },
     createPost(state, newPost) {
-      state.posts.push(newPost);
+      // state.posts.push(newPost);
+      state.posts = [...state.posts, newPost];
     },
     deletePost(state, postId) {
       state.posts = state.posts.filter((post) => post.id !== postId);

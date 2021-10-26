@@ -1,11 +1,11 @@
 <template>
   <form @submit.prevent="submit" class="form">
     <input
+      :title="nameTitle"
+      :placeholder="namePlaceholder"
+      v-model.lazy.trim="name"
       type="text"
       class="form__name"
-      placeholder="Ваше имя..."
-      title="Имя может быть от 2 до 40 символов"
-      v-model.lazy.trim="name"
       pattern=".{2,40}"
       maxlength="40"
       spellcheck="false"
@@ -13,15 +13,15 @@
     />
 
     <textarea
-      cols="50"
-      rows="4"
-      placeholder="Введите текст сообщения..."
-      title="Длинна сообщения от 2 до 200 символов"
-      v-model.trim="comment"
-      required
+      :title="textAreaTitle"
+      :placeholder="textAreaPlaceholder"
       :minlength="min"
       :maxlength="max"
+      v-model.trim="comment"
+      cols="50"
+      rows="4"
       class="textarea__comment"
+      required
     ></textarea>
 
     <CommentLength :max="max" :comment="comment" />
@@ -51,6 +51,10 @@ export default {
       comment: "",
       min: 2,
       max: 200,
+      nameTitle: "Имя может быть от 2 до 40 символов",
+      namePlaceholder: "Ваше имя...",
+      textAreaTitle: "Длинна сообщения от 2 до 200 символов",
+      textAreaPlaceholder: "Введите текст сообщения...",
     };
   },
   methods: {
